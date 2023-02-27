@@ -8,7 +8,7 @@ const TaskTopNavigator = createMaterialTopTabNavigator();
 export default function TaskTopNavigaton() {
   return (
     <TaskTopNavigator.Navigator>
-      <TaskTopNavigator.Screen name="Add Usage" component={TaskAdd} />
+      <TaskTopNavigator.Screen name="Add Task" component={TaskAdd} />
       <TaskTopNavigator.Screen name="History" component={TaskHistory} />
     </TaskTopNavigator.Navigator>
   );
