@@ -1,4 +1,4 @@
-import { MenuItem, MenuList, Stack, TextField } from "@mui/material";
+import { Button, MenuItem, MenuList, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -87,6 +87,8 @@ export default function FinanceAdd() {
             sx={{ fontSize: "20px" }}
           />
         </div>
+
+        <Button variant="contained">ADD USAGE</Button>
       </Stack>
     </Box>
   );
