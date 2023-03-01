@@ -29,6 +29,7 @@
     "react-native": "0.70.5",
     "react-native-tab-view": "^3.5.0",
     "react-native-web": "~0.18.9",
+    "realm": "^11.5.1",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
