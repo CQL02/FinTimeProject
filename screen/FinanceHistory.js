@@ -1,12 +1,13 @@
 import { Text, View } from "react-native";
 import { Box } from "@mui/material";
+import { useState, useEffect } from "react";
 
 const FinanceDatas = [
   {
     id: "1",
     title: "Nasi Lemak KK7",
     category: "Food",
-    cost: -7.0,
+    cost: 7.0,
     date: "2/3/2023",
     description: "nice to eat",
   },
@@ -14,8 +15,8 @@ const FinanceDatas = [
     id: "2",
     title: "belanja ali",
     category: "Food",
-    cost: -10.0,
-    date: "3/3/2023",
+    cost: 10.0,
+    date: "2/3/2023",
     description: "gongcha",
   },
   {
@@ -29,38 +30,92 @@ const FinanceDatas = [
 ];
 
 export default function FinancHistory() {
-  // const [finances, setFinances] = useState(FinanceDatas);
+  const [arrangedData, setArrangedData] = useState({});
+  useEffect(() => {
+    const sorted = FinanceDatas.sort((a, b) => {
+      const dateA = new Date(a.date.split("/").reverse().join("-")).getTime();
+      const dateB = new Date(b.date.split("/").reverse().join("-")).getTime();
+      return dateB - dateA;
+    });
+    const arrange = sorted.reduce((accumulator, currentValue) => {
+      const date = currentValue.date;
+      if (!accumulator[date]) accumulator[date] = [];
+      accumulator[date].push(currentValue);
+      return accumulator;
+    }, {});
 
-  // const handleTaskStatusChange = (financesId) => (event) => {
-  //   const updatedFinances = finances.map((finance) =>
-  //     finance.id === financeId ? { ...finance, status: event.target.checked } : finance
-  //   );
-  //   setTasks(updatedFinances);
-  // };
+    setArrangedData(arrange);
+  }, []);
 
   return (
     <View>
-      {FinanceDatas.map((finance) => (
-        <Box
-          key={finance.id}
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            m: 1,
-          }}
-        >
-          <Box sx={{ width: "70vw" }}>
-            <Text style={{ fontSize: 20 }}>
-              <b>{finance.title}</b>
+      <Text style={{ fontSize: 30, margin: 15 }}>Usage:</Text>
+
+      {Object.keys(arrangedData).map((date) => {
+        return (
+          <View key={date}>
+            <Text
+              style={{
+                fontSize: 25,
+                backgroundColor: "gray",
+                paddingLeft: 15,
+              }}
+            >
+              {date}
             </Text>
-            <Text style={{ fontSize: 12 }}>{"\n" + finance.category}</Text>
-            <Text style={{ fontSize: 12 }}>{"\n" + finance.date}</Text>
-          </Box>
-          <Text style={{ textAlign: "left", width: "30vw", fontSize: 25 }}>
-            {finance.cost.toFixed(2)}
-          </Text>{" "}
-        </Box>
-      ))}
+
+            {arrangedData[date].map((finance) => {
+              return (
+                <Box
+                  key={finance.id}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    mb: 1,
+                    ml: 2,
+                  }}
+                >
+                  <Box sx={{ width: "60vw" }}>
+                    <Text style={{ fontSize: 20 }}>
+                      <b>{finance.title}</b>
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>
+                      {"\n\t" + finance.category}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>
+                      {"\n\t" + finance.date}
+                    </Text>
+                  </Box>
+
+                  {finance.category === "Return" ? (
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        width: "40vw",
+                        fontSize: 25,
+                        color: "green",
+                      }}
+                    >
+                      + RM {finance.cost.toFixed(2)}
+                    </Text>
+                  ) : (
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        width: "40vw",
+                        fontSize: 25,
+                        color: "red",
+                      }}
+                    >
+                      - RM {finance.cost.toFixed(2)}
+                    </Text>
+                  )}
+                </Box>
+              );
+            })}
+          </View>
+        );
+      })}
     </View>
   );
 }

@@ -1,6 +1,9 @@
 import { Button, MenuItem, MenuList, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import {
+  LocalizationProvider,
+  MobileDateTimePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import { Text, View } from "react-native";
@@ -66,8 +69,7 @@ export default function FinanceAdd() {
         <div>
           <Text style={{ fontSize: "20px" }}>Due Date: </Text>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <MobileDatePicker
-              inputFormat="DD/MM/YYYY"
+            <MobileDateTimePicker
               value={dueDate}
               onChange={handleDueDateChange}
               renderInput={(params) => (
@@ -87,7 +89,14 @@ export default function FinanceAdd() {
           />
         </div>
 
-        <Button variant="contained">ADD TASK</Button>
+        <Stack direction="row" justifyContent="space-evenly">
+          <Button variant="contained" sx={{ width: "40vw" }}>
+            CLEAR
+          </Button>
+          <Button variant="contained" sx={{ width: "40vw" }}>
+            SAVE
+          </Button>
+        </Stack>
       </Stack>
     </Box>
   );

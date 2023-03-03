@@ -9,7 +9,7 @@ const taskDatas = [
     category: "WIA2001 DATA STRUCTURE",
     due: "2/3/2023",
     description: "andriod studio",
-    status: false,
+    status: true,
   },
   {
     id: "2",
