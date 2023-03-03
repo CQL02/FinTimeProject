@@ -60,8 +60,12 @@ export default function FinanceAdd() {
         </div>
 
         <div>
-          <Text style={{ fontSize: "20px" }}>Cost: </Text>
-          <TextField variant="standard" sx={{ fontSize: "20px" }} />
+          <Text style={{ fontSize: "20px" }}>Cost: RM</Text>
+          <TextField
+            variant="standard"
+            type="number"
+            sx={{ fontSize: "20px" }}
+          />
         </div>
 
         <div>
@@ -88,7 +92,14 @@ export default function FinanceAdd() {
           />
         </div>
 
-        <Button variant="contained">ADD USAGE</Button>
+        <Stack direction="row" justifyContent="space-evenly">
+          <Button variant="contained" sx={{ width: "40vw" }}>
+            CLEAR
+          </Button>
+          <Button variant="contained" sx={{ width: "40vw" }}>
+            SAVE
+          </Button>
+        </Stack>
       </Stack>
     </Box>
   );
