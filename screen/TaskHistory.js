@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text } from "react-native";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Box, Checkbox, FormControlLabel } from "@mui/material";
 
 const taskDatas = [
   {
@@ -42,25 +42,33 @@ export default function TaskList() {
   return (
     <View>
       {tasks.map((task) => (
-        <FormControlLabel
+        <Box
           key={task.id}
-          control={
-            <Checkbox
-              checked={task.status}
-              onChange={handleTaskStatusChange(task.id)}
-            />
-          }
-          label={
-            <>
-              <Text style={{ fontSize: 20 }}>
-                <b>{task.title}</b>
-              </Text>
-              <Text style={{ fontSize: 12 }}>{"\n" + task.category}</Text>
-              <Text style={{ fontSize: 12 }}>{"\n" + task.due}</Text>
-            </>
-          }
-          sx={{ m: 1 }}
-        />
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={task.status}
+                onChange={handleTaskStatusChange(task.id)}
+              />
+            }
+            sx={{ m: 1, width: "10vw" }}
+          />
+
+          <Box sx={{ width: "90vw" }}>
+            <Text style={{ fontSize: 20 }}>
+              <b>{task.title}</b>
+            </Text>
+            <Text style={{ fontSize: 12 }}>{"\n" + task.category}</Text>
+            <Text style={{ fontSize: 12 }}>{"\nDue: " + task.due}</Text>
+          </Box>
+
+          <Text style={{ textAlign: "right" }}>{task.due}</Text>
+        </Box>
       ))}
     </View>
   );
