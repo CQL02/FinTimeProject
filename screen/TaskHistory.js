@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { Box, Checkbox, FormControlLabel } from "@mui/material";
+import { Box, Checkbox, IconButton, Button } from "@mui/material";
+import { Text, View, Modal, TouchableOpacity } from "react-native";
+import CloseIcon from "@mui/icons-material/Close";
 
 const taskDatas = [
   {
@@ -87,6 +88,19 @@ export default function TaskList() {
     return parts[1] + "/" + parts[0] + "/" + parts[2];
   };
 
+  const [selectData, setSelectData] = useState(null);
+  const handleSelectedData = (data) => {
+    setSelectData(data);
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
   return (
     <View>
       <Text style={{ fontSize: 30, margin: 15 }}>Task List:</Text>
@@ -105,7 +119,13 @@ export default function TaskList() {
               sx={{ m: 1, width: "10vw" }}
             />
 
-            <Box sx={{ width: "90vw" }}>
+            <Box
+              sx={{ width: "90vw" }}
+              onClick={() => {
+                handleSelectedData(task);
+                handleOpen();
+              }}
+            >
               <Text style={{ fontSize: 20 }}>
                 <b>{task.title}</b>
               </Text>
@@ -121,6 +141,52 @@ export default function TaskList() {
           </Box>
         );
       })}
+      {selectData && (
+        <Modal visible={isOpen} animationType="slide" transparent={true}>
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <View style={{ backgroundColor: "#fff", padding: 20 }}>
+              <IconButton
+                onClick={() => handleClose()}
+                sx={{ marginLeft: "auto" }}
+              >
+                <CloseIcon />
+              </IconButton>
+              <Box sx={{ padding: 2 }}>
+                <Text style={{ fontSize: "20px" }}>
+                  Title: {selectData.title}
+                  {"\n"}
+                  {"\n"}
+                </Text>
+
+                <Text style={{ fontSize: "20px" }}>
+                  Category: {selectData.category}
+                  {"\n"}
+                  {"\n"}
+                </Text>
+
+                <Text style={{ fontSize: "20px" }}>
+                  Due: {selectData.due}
+                  {"\n"}
+                  {"\n"}
+                </Text>
+
+                <Text style={{ fontSize: "20px" }}>
+                  Description: {selectData.description}
+                  {"\n"}
+                  {"\n"}
+                </Text>
+
+                <Button
+                  variant="contained"
+                  sx={{ width: "40vw", float: "right" }}
+                >
+                  DELETE
+                </Button>
+              </Box>
+            </View>
+          </View>
+        </Modal>
+      )}
     </View>
   );
 }
