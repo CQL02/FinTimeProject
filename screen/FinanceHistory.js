@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
-import { Box } from "@mui/material";
+import { Text, View, Modal, TouchableOpacity } from "react-native";
+import { Box, IconButton, Button } from "@mui/material";
 import { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 const FinanceDatas = [
   {
@@ -47,6 +48,19 @@ export default function FinancHistory() {
     setArrangedData(arrange);
   }, []);
 
+  const [selectData, setSelectData] = useState(null);
+  const handleSelectedData = (data) => {
+    setSelectData(data);
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
   return (
     <View>
       <Text style={{ fontSize: 30, margin: 15 }}>Usage:</Text>
@@ -66,16 +80,22 @@ export default function FinancHistory() {
 
             {arrangedData[date].map((finance) => {
               return (
-                <Box
+                <div
                   key={finance.id}
-                  sx={{
+                  style={{
                     display: "flex",
                     flexDirection: "row",
-                    mb: 1,
-                    ml: 2,
+                    marginBottom: 1,
+                    marginLeft: 2,
                   }}
                 >
-                  <Box sx={{ width: "60vw" }}>
+                  <Box
+                    sx={{ width: "60vw" }}
+                    onClick={() => {
+                      handleSelectedData(finance);
+                      handleOpen();
+                    }}
+                  >
                     <Text style={{ fontSize: 20 }}>
                       <b>{finance.title}</b>
                     </Text>
@@ -110,7 +130,64 @@ export default function FinancHistory() {
                       - RM {finance.cost.toFixed(2)}
                     </Text>
                   )}
-                </Box>
+
+                  {selectData && (
+                    <Modal
+                      visible={isOpen}
+                      animationType="slide"
+                      transparent={true}
+                    >
+                      <View style={{ flex: 1, justifyContent: "center" }}>
+                        <View style={{ backgroundColor: "#fff", padding: 20 }}>
+                          <IconButton
+                            onClick={() => handleClose()}
+                            sx={{ marginLeft: "auto" }}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                          <Box sx={{ padding: 2 }}>
+                            <Text style={{ fontSize: "20px" }}>
+                              Title: {selectData.title}
+                              {"\n"}
+                              {"\n"}
+                            </Text>
+
+                            <Text style={{ fontSize: "20px" }}>
+                              Category: {selectData.category}
+                              {"\n"}
+                              {"\n"}
+                            </Text>
+
+                            <Text style={{ fontSize: "20px" }}>
+                              Cost: RM{selectData.cost}
+                              {"\n"}
+                              {"\n"}
+                            </Text>
+
+                            <Text style={{ fontSize: "20px" }}>
+                              Date: {selectData.date}
+                              {"\n"}
+                              {"\n"}
+                            </Text>
+
+                            <Text style={{ fontSize: "20px" }}>
+                              Description: {selectData.description}
+                              {"\n"}
+                              {"\n"}
+                            </Text>
+
+                            <Button
+                              variant="contained"
+                              sx={{ width: "40vw", float: "right" }}
+                            >
+                              DELETE
+                            </Button>
+                          </Box>
+                        </View>
+                      </View>
+                    </Modal>
+                  )}
+                </div>
               );
             })}
           </View>
