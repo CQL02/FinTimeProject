@@ -8,7 +8,7 @@ const taskDatas = [
     id: "1",
     title: "Do Assignment",
     category: "WIA2001 DATA STRUCTURE",
-    due: "3/2/2023 11:00 AM",
+    due: "4/2/2023 11:00 AM",
     description: "andriod studio",
     status: true,
   },
@@ -16,7 +16,7 @@ const taskDatas = [
     id: "2",
     title: "Design Poster",
     category: "EVENT PTUM",
-    due: "3/5/2023 12:10 PM",
+    due: "4/3/2023 12:10 PM",
     description: "recruitment poster",
     status: false,
   },
@@ -24,7 +24,7 @@ const taskDatas = [
     id: "3",
     title: "research on SPSS",
     category: "WIA2003 PROBABILITY AND STATISTICS",
-    due: "3/13/2023 12:00 PM",
+    due: "4/1/2023 5:00 PM",
     description: "Mann whitney U test, Anova test",
     status: false,
   },
@@ -134,7 +134,6 @@ export default function TaskList() {
                 {"\nDue: " + orderedDate(task.due)}
               </Text>
             </Box>
-
             <Text style={{ textAlign: "right", paddingRight: 20 }}>
               {calRemainTime(task)}
             </Text>
