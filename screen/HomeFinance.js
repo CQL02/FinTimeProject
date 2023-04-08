@@ -3,6 +3,7 @@ import { Box, IconButton, Button, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { DatePicker } from "@mui/x-date-pickers";
+import showfinancehistory from "../component/showfinancehistory";
 
 const FinanceDatas = [
   {
@@ -96,11 +97,8 @@ export default function HomeFinance() {
       <Text style={{ fontSize: 25, margin: 15 }}>
         {new Date().toLocaleDateString()}
       </Text>
-      <Box sx={{ ml: 10, mr: 10, mt: 2, bgcolor: "orange", borderRadius: 5 }}>
-        <Text style={{ fontSize: 25, margin: 15 }}>Budget: {"\n"}</Text>
-        <Text style={{ fontSize: 25, margin: 15 }}>Used: {"\n"}</Text>
-        <Text style={{ fontSize: 25, margin: 15 }}>Left: {"\n"}</Text>
-      </Box>
+
+      {showfinancehistory()}
 
       <Text style={{ fontSize: 20, margin: 15 }}>Usage:</Text>
 
